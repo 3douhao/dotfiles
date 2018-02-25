@@ -57,6 +57,7 @@ ZSH_THEME="robbyrussell"
 plugins=(tmuxinator git autojump vi-mode zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
 # User configuration
 
@@ -116,10 +117,15 @@ alias t="tmux"
 alias rs="python manage.py runserver"
 alias mm="python manage.py makemigrations"
 alias mg="python manage.py migrate"
+
+alias tk="tmux kill-session -t"
+alias tn="tmux new -s"
+alias tl="tmux ls"
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
 # virtualenvwrapper settings
 export WORKON_HOME=$HOME/.virtualenvs

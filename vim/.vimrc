@@ -4,7 +4,22 @@ set mouse=a
 
 " fzf settings
 set rtp+=~/.fzf
+nnoremap <Leader>F :FZF<CR>
 
+nnoremap <C-l> :nohlsearch<CR>
+
+""fold settings
+"augroup vimrc
+"  au BufReadPre * setlocal foldmethod=indent
+"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+"augroup END
+
+"Make views automatic
+autocmd BufWinLeave *.* mkview 
+autocmd BufWinEnter *.* silent loadview
+
+nnoremap ' `
+" inoremap <C-e> <C-o>A
 
 set backspace=indent,eol,start
 
@@ -45,57 +60,30 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 
-" let g:sparkupExecuteMapping = "<C-i>"
-
-
-let python_highlight_all = 1
-
 nmap <leader>t :TagbarToggle<CR>
 " nnoremap :tabnew<Space>
-"
 
-
+nnoremap <Leader>n :set relativenumber!<CR>
 set number relativenumber
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
+" :augroup numbertoggle
+" :  autocmd!
+" :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+" :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+" :augroup END
 
-let python_highlight_all=1
 syntax on " highlight
+set t_Co=256
 colorscheme evening
+" let g:gruvbox_italic = 1
+" colorscheme gruvbox
+" set termguicolors     " enable true colors support
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="dark"   " for dark version of theme
+" colorscheme ayu
 
 execute pathogen#infect()
 call pathogen#helptags()
-
-" Syntastic settings
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" nnoremap <Leader>s :SyntasticReset<CR>
-
-
-""python-mode plugin settings(deleted)
-" let g:pymode_python = 'python3' "using python3 instead of python2 , which is default
-" let g:pymode = 1
-" let g:pymode_paths = []
-" let g:pymode_options = 1
-" let g:pymode_options_max_line_length = 79
-" let g:pymode_options_colorcolumn = 1
-" let g:pymode_quickfix_minheight = 3
-" let g:pymode_quickfix_maxheight = 6
-" let g:pymode_indent = 1
-" let g:pymode_motion = 1
-" let g:pymode_doc = 1
-" let g:pymode_doc_bind = 'K'
-" let g:pymode_syntax = 1
-" let g:pymode_syntax_all = 1
-" let g:pymode_syntax_print_as_function = 0
-" let g:pymode_syntax_highlight_async_await = g:pymode_syntax_all
-" let g:pymode_syntax_highlight_equal_operator = g:pymode_syntax_all
-" let g:pymode_lint_checkers = ['pylint']
-" let g:pymode_lint_message = 1
 
 
 "vim-airline settings
@@ -103,16 +91,18 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#enabled = 1
-" let g:airline_theme='simple'
+let g:airline_theme='simple'
 
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
+"Tmuxline settings
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W'],
+      \'y'    : ['%R']}
 
-"no plugin speech setting
-filetype off
+
+let python_highlight_all = 1
+
 filetype plugin indent on
 
 " Indentation without hard tabs
@@ -146,14 +136,17 @@ set hidden
 
 set showmatch
 set wildmenu
+set wildmode=full
 set hlsearch
 set incsearch
 set laststatus=2
 set statusline+=%f
-" Enable folding 
+
+" " Enable folding 
 set foldmethod=indent 
 set foldlevel=99
-" iunmap <C-j>
+
+
 inoremap <C-j> <Esc>A:<CR>
 noremap <leader>, :vertical resize +5<CR>
 noremap <leader>. :vertical resize -5<CR>
@@ -166,11 +159,29 @@ nnoremap <Tab> :bnext<CR>
 nmap <S-h> :bp<cr>
 nmap <S-l> :bn<cr>
 
+nnoremap <Leader>b :b 
+
 
 "Buffer switch using numbers
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
+
+"The following lets you type Ngb to jump to buffer number N (a number from 1 to 99). For example, typing 12gb would jump to buffer 12.
+let c = 1
+while c <= 99
+  execute "nnoremap " . c . "gb :" . c . "b\<CR>"
+    let c += 1
+    endwhile
 
 
-" map <C-q> <C-W>q
 noremap <leader>q ZQ
 noremap <leader>d :bd<cr>
 noremap <Leader>e :edit<Space>
@@ -192,22 +203,6 @@ noremap <Leader>P "+p
 " increase the window size by a factor of 1.5 and decrease the window size by 0.67
 " nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 " nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-
-
-" always keep the cursor in the middle of the screen
-" nnoremap k kzz
-" nnoremap j jzz
-" nnoremap p pzz
-" nnoremap P Pzz
-" nnoremap G Gzz
-" nnoremap x xzz
-" inoremap <ESC> <ESC>zz
-" nnoremap <ENTER> <ENTER>zz
-" inoremap <ENTER> <ENTER><ESC>zza
-" nnoremap o o<ESC>zza
-" nnoremap O O<ESC>zza
-" nnoremap a a<ESC>zza
-
 
 
 noremap <CR> o<Esc>
