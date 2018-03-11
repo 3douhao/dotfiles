@@ -2,11 +2,39 @@
 set path=$PWD/**
 set mouse=a
 
+set textwidth=0
+set wrapmargin=0
+
+set ignorecase
+set smartcase
+
 " fzf settings
 set rtp+=~/.fzf
 nnoremap <Leader>F :FZF<CR>
 
-nnoremap <C-l> :nohlsearch<CR>
+vnoremap <Leader>m :Autoformat<CR>
+
+
+" matchit.vim settings
+set nocompatible
+filetype plugin indent on
+runtime macros/matchit.vim
+
+
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <C-i> <C-i>zz
+nnoremap <C-o> <C-o>zz
+nnoremap [[ [[<bar>zt
+nnoremap ]] ]]<bar>zt
+nnoremap (( ((<bar>zt
+nnoremap )) ))<bar>zt
+nnoremap {{ {{<bar>zt
+nnoremap }} }}<bar>zt
+
+
+
+nnoremap <Leader>h :nohlsearch<CR>
 
 ""fold settings
 "augroup vimrc
@@ -19,11 +47,14 @@ autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
 nnoremap ' `
-" inoremap <C-e> <C-o>A
 
 set backspace=indent,eol,start
 
-set textwidth=80
+" nnoremap [[ [[<bar>zt
+" nnoremap ]] ]]<bar>zt
+nnoremap o zz<bar>o
+" set scrolloff=5
+
 
 :set wrap
 :set linebreak
@@ -45,11 +76,19 @@ noremap <C-c> <ESC>:w<CR>
 inoremap <C-c> <ESC>:w<CR>
 
 " Emmet settings
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
-let g:user_emmet_leader_key='<C-z>'
+" let g:user_emmet_install_global = 0
+" autocmd FileType html,css EmmetInstall
+" let g:user_emmet_leader_key='<C-z>'
+
 map <C-z> <Nop>
-" let g:user_emmet_expandabbr_key='<C-z>'
+
+let g:sparkupExecuteMapping = '<C-z>'
+
+
+let b:match_words = '<:>,<tag>:</tag>'
+
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 let g:ycm_key_list_select_completion = ['<C-n>']
 let g:ycm_key_list_previous_completion = ['<C-p>']
@@ -57,11 +96,11 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" let g:UltiSnipsUsePythonVersion = 3
+" let g:UltiSnipsSnippetDirectories=$HOME.'/.vim/UltiSnips'
 " let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 
-nmap <leader>t :TagbarToggle<CR>
-" nnoremap :tabnew<Space>
 
 nnoremap <Leader>n :set relativenumber!<CR>
 set number relativenumber
@@ -103,7 +142,6 @@ let g:tmuxline_preset = {
 
 let python_highlight_all = 1
 
-filetype plugin indent on
 
 " Indentation without hard tabs
 set autoindent
@@ -116,7 +154,7 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
+    " \ set textwidth=79 |
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix
@@ -148,11 +186,13 @@ set foldlevel=99
 
 
 inoremap <C-j> <Esc>A:<CR>
+" inoremap <C-u> <C-o>c0<C-d>
+
 noremap <leader>, :vertical resize +5<CR>
 noremap <leader>. :vertical resize -5<CR>
 
 " Switch between the last two files
-nnoremap <Leader><Leader> <C-^>
+nnoremap <Leader>o <C-^>
 nnoremap <Tab> :bnext<CR>
 
 "Buffer switch settings
@@ -187,11 +227,11 @@ noremap <leader>d :bd<cr>
 noremap <Leader>e :edit<Space>
 noremap <Leader>f :find<Space>
 
-" vimux mapping
-" Prompt for a command to run
-map <Leader>vp :VimuxPromptCommand<CR>
-" Run last command executed by VimuxRunCommand
-map <Leader>vl :VimuxRunLastCommand<CR>
+" " vimux mapping
+" " Prompt for a command to run
+" map <Leader>vp :VimuxPromptCommand<CR>
+" " Run last command executed by VimuxRunCommand
+" map <Leader>vl :VimuxRunLastCommand<CR>
 
 " nnoremap <silent> vv <C-w>v
 
@@ -214,15 +254,7 @@ nnoremap tc :tabc<CR>
 nnoremap <leader>rv :source $MYVIMRC<CR>
 noremap <leader>av :e $MYVIMRC<CR> 
 
-imap jj <Left>
-imap kk <Right>
-
-" cnoremap <A-h> <Left>
-" cnoremap <A-j> <Down>
-" cnoremap <A-k> <Up>
-" cnoremap <A-l> <Right>
-
-inoremap <C-[> <Esc><Esc>
+" inoremap <C-[> <Esc><Esc>
 "let g:indent_guides_auto_colors = 0
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 "vutocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
@@ -238,13 +270,13 @@ nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 
 
 "Enhanced increment/decrement(Ctrl-A Ctrl-X)
-function! AddSubtract(char, back)
-  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
-  call search(pattern, 'cw' . a:back)
-  execute 'normal! ' . v:count1 . a:char
-  silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
-endfunction
-nnoremap <silent>         <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
-nnoremap <silent> <Leader><C-a> :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
-nnoremap <silent>         <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
-nnoremap <silent> <Leader><C-x> :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
+" function! AddSubtract(char, back)
+"   let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
+"   call search(pattern, 'cw' . a:back)
+"   execute 'normal! ' . v:count1 . a:char
+"   silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+" endfunction
+" nnoremap <silent>         <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
+" nnoremap <silent> <Leader><C-a> :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
+" nnoremap <silent>         <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
+" nnoremap <silent> <Leader><C-x> :<C-u>call AddSubtract("\<C-x>", 'b')<CR>

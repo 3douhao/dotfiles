@@ -5,7 +5,7 @@ export ZSH=/Users/tomjerry/.oh-my-zsh
 export CLICOLOR=YES
 export EDITOR="vim"
 
-
+# stty erase '^?'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -54,10 +54,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(tmuxinator git autojump vi-mode zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(tmuxinator git autojump zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
-source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
+# source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
 # User configuration
 
@@ -97,7 +97,6 @@ alias gl="git log"
 alias ga="git add --all"
 alias gh="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
 alias md="mkdir"
-alias ..="cd .."
 alias vv="v ~/.vimrc"
 alias vz="v ~/.zshrc"
 alias vt="v ~/.tmux.conf"
@@ -121,6 +120,7 @@ alias mg="python manage.py migrate"
 alias tk="tmux kill-session -t"
 alias tn="tmux new -s"
 alias tl="tmux ls"
+alias ta="tmux a"
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
