@@ -28,7 +28,7 @@ local key2app = {
     u = 'iTunes',
     v = 'Visual Studio Code',
     --w = 'AliWangwang',
-    -- x = '',
+    x = 'Firefox',
     -- y = '',
     --z = 'Sublime Text',
 }
