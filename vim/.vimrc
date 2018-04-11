@@ -100,6 +100,8 @@ inoremap <C-y> <C-y><C-e>
 
 " map <C-z> <Nop>
 
+let python_highlight_all = 1
+
 let g:sparkupExecuteMapping = '<C-z>'
 
 
@@ -150,8 +152,8 @@ let g:ale_fix_on_save = 1
 let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'],}
 let g:ale_lint_on_text_changed = 'never'
 
-nmap <silent> <leader>aj :ALENext<cr>
-nmap <silent> <leader>ak :ALEPrevious<cr>
+nmap <silent> <leader>jj :ALENext<cr>
+nmap <silent> <leader>kk :ALEPrevious<cr>
 
 
 
@@ -171,6 +173,7 @@ set number relativenumber
 syntax on " highlight
 set t_Co=256
 colorscheme evening
+
 " let g:gruvbox_italic = 1
 " colorscheme gruvbox
 " set termguicolors     " enable true colors support
@@ -197,10 +200,6 @@ let g:tmuxline_preset = {
       \'win'  : ['#I', '#W'],
       \'cwin' : ['#I', '#W'],
       \'y'    : ['%R']}
-
-
-let python_highlight_all = 1
-
 
 " Indentation without hard tabs
 set autoindent
@@ -339,5 +338,3 @@ nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 " nnoremap <silent> <Leader><C-a> :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
 " nnoremap <silent>         <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 " nnoremap <silent> <Leader><C-x> :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
-
-
