@@ -25,6 +25,35 @@ nmap \o :set paste!<CR>
 
 nnoremap gh <S-h>
 nnoremap gl <S-l>
+inoremap <C-e> <C-o>A
+
+nnoremap db dvb
+nnoremap cb cvb
+ab ct {% csrf_token %}
+ab fp {{ form.as_p}}
+ab on on_delete=models.CASCADE
+ab mm models.Model
+ab kwa *args, **kwargs
+ab ex {% extends 'base.html' %}
+ab F False
+ab T True
+ab str __str__(self):
+ab ini __int__(self):
+ab mod models.Model
+ab re return
+
+nnoremap - <C-y>
+" nnoremap k <C-y>
+nnoremap = <C-e>
+" nnoremap j <C-e>
+
+nnoremap } /^\S<CR>
+nnoremap { ?^\S<CR>
+
+nnoremap \x :cclose<CR>
+
+nnoremap <Leader>x daw
+
 
 "Ag settings
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -95,11 +124,6 @@ noremap <C-c> <ESC>:w<CR>
 inoremap <C-c> <ESC>:w<CR>
 
 
-inoremap <C-y> <C-y><C-e>
-
-
-" map <C-z> <Nop>
-
 let python_highlight_all = 1
 
 let g:sparkupExecuteMapping = '<C-z>'
@@ -121,30 +145,29 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+	\	'operators': '_,_',
+	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+	\	'separately': {
+	\		'*': {},
+	\		'tex': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+	\		},
+	\		'lisp': {
+	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+	\		},
+	\		'vim': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+	\		},
+	\		'html': {
+	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+	\		},
+	\		'css': 0,
+	\	}
+	\}
 
 
 let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace'],}
@@ -243,8 +266,12 @@ set foldmethod=indent
 set foldlevel=99
 
 
-inoremap <C-j> <Esc>A:<CR>
-" inoremap <C-u> <C-o>c0<C-d>
+inoremap <C-[> <Esc>A:<CR>
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+
+let g:pymode_python = 'python3'
+let g:pymode_rope = 0
 
 noremap <leader>, :vertical resize +5<CR>
 noremap <leader>. :vertical resize -5<CR>
