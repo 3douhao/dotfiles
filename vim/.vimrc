@@ -25,7 +25,7 @@ nmap \o :set paste!<CR>
 
 nnoremap gh <S-h>
 nnoremap gl <S-l>
-inoremap <C-e> <C-o>A
+" inoremap <C-e> <C-o>A
 
 nnoremap db dvb
 nnoremap cb cvb
@@ -35,12 +35,16 @@ ab on on_delete=models.CASCADE
 ab mm models.Model
 ab kwa *args, **kwargs
 ab ex {% extends 'base.html' %}
+ab wtags {% load wagtailcore_tags %}
 ab F False
 ab T True
 ab str __str__(self):
 ab ini __int__(self):
 ab mod models.Model
 ab re return
+
+
+
 
 nnoremap - <C-y>
 " nnoremap k <C-y>
@@ -68,6 +72,9 @@ set nocompatible
 filetype plugin indent on
 runtime macros/matchit.vim
 
+nnoremap <Leader>! :!
+
+let g:vim_json_syntax_conceal = 0
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -80,7 +87,8 @@ nnoremap <C-o> <C-o>zz
 " nnoremap {{ {{<bar>zz
 " nnoremap }} }}<bar>zz
 
-
+nnoremap j gj
+nnoremap k gk
 
 nnoremap \h :nohlsearch<CR>
 
@@ -129,7 +137,8 @@ let python_highlight_all = 1
 let g:sparkupExecuteMapping = '<C-z>'
 
 
-let b:match_words = '<:>,<tag>:</tag>'
+let b:match_words = '<tag>:</tag>'
+" let b:match_words = '<:>,<tag>:</tag>'
 
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -170,9 +179,9 @@ let g:rainbow_conf = {
 	\}
 
 
-let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace'],}
+let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace'], 'javascript': ['standard'],}
 let g:ale_fix_on_save = 1
-let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'],}
+let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'], 'javascript': ['standard'],}
 let g:ale_lint_on_text_changed = 'never'
 
 nmap <silent> <leader>jj :ALENext<cr>
@@ -225,10 +234,8 @@ let g:tmuxline_preset = {
       \'y'    : ['%R']}
 
 " Indentation without hard tabs
-set autoindent
-set expandtab
-" set shiftwidth=2
-" set softtabstop=2
+" set autoindent
+" set expandtab
 
 
 au BufNewFile,BufRead *.py
@@ -236,14 +243,14 @@ au BufNewFile,BufRead *.py
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
     " \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
+    " \ set expandtab |
+    " \ set autoindent |
     \ set fileformat=unix
-
-au BufNewFile,BufRead *.js,*.html,*.css
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2 |
+autocmd Filetype css setlocal ts=2 sw=2 expandtab
+" au BufNewFile,BufRead *.js,*.html,*.css
+"     \ set tabstop=2 |
+"     \ set softtabstop=2 |
+"     \ set shiftwidth=2 |
 set encoding=utf-8
 
 set complete-=i   " disable scanning included files
@@ -365,3 +372,4 @@ nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 " nnoremap <silent> <Leader><C-a> :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
 " nnoremap <silent>         <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 " nnoremap <silent> <Leader><C-x> :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
+" 'javascript': ['prettier', 'eslint'],
