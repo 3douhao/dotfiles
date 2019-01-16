@@ -5,6 +5,11 @@ export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applic
 export ZSH=/Users/tomjerry/.oh-my-zsh
 export CLICOLOR=YES
 export EDITOR="vim"
+export GOPATH=$HOME/go
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # stty erase '^?'
 
@@ -92,13 +97,17 @@ alias v="/usr/local/bin/vim"
 alias de="deactivate"
 alias gs="git status"
 alias gc="git commit -m"
+alias gi="git init"
 alias gp="git push"
 alias gu="git pull origin master"
 alias gl="git log"
+alias go="git clone"
 alias ga="git add --all"
 alias gh="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
 alias sp="django-admin startproject"
+alias ni="npm install"
 alias sa="django-admin startapp"
+alias yd="youtube-dl -f best -o ~/Downloads/youtube/'%(title)s.%(ext)s'"
 alias d="dirs -v"
 alias md="mkdir"
 alias vv="v ~/.vimrc"
@@ -110,6 +119,7 @@ alias -s js=v
 alias -s txt=v
 alias ve="virtualenv"
 alias pi="pip install"
+alias pr="pip install -r requirements.txt"
 alias gd="cd ~/Desktop"
 alias bk="cd -"
 #alias vm="set -o vi"
@@ -121,6 +131,7 @@ alias t="tmux"
 alias rs="python manage.py runserver"
 alias mm="python manage.py makemigrations"
 alias mg="python manage.py migrate"
+alias csu="python manage.py createsuperuser"
 
 alias tk="tmux kill-session -t"
 alias tn="tmux new -s"
