@@ -424,3 +424,21 @@ nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 " nnoremap <silent>         <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
 " nnoremap <silent> <Leader><C-x> :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
 " 'javascript': ['prettier', 'eslint'],
+
+
+
+"Vim-plug section
+
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+"call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/bundle')
+
+call plug#end()
