@@ -3,6 +3,8 @@ let mapleader = ' '
 set path=$PWD/**
 set mouse=a
 
+let g:used_javascript_libs = 'vue,underscore'
+
 set textwidth=0
 set wrapmargin=0
 
@@ -13,11 +15,17 @@ set suffixesadd=.py
 set wildignore=*.pyc
 let g:netrw_list_hide= '.*\.pyc$'
 
+
+"vim-rooter setting
+" let g:rooter_silent_chdir = 1
+
+
 " fzf settings
 set rtp+=~/.fzf
-nnoremap <Leader>z :FZF<CR>
+nnoremap <Leader>f :FZF<CR>
 
-nnoremap <Leader>cd :lcd %:p:h<CR>
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+" nnoremap <Leader>cd :lcd %:p:h<CR>
 
 set tags+=~/tags/django.tags
 
@@ -29,26 +37,26 @@ nnoremap gl <S-l>
 
 nnoremap db dvb
 nnoremap cb cvb
-ab ct {% csrf_token %}
-ab fp {{ form.as_p}}
-ab on on_delete=models.CASCADE
-ab mm models.Model
-ab kwa *args, **kwargs
-ab ex {% extends 'base.html' %}
-ab wtags {% load wagtailcore_tags %}
+" ab ct {% csrf_token %}
+" ab fp {{ form.as_p}}
+" ab mm models.Model
+" ab kwa *args, **kwargs
+" ab ex {% extends 'base.html' %}
+" ab wtags {% load wagtailcore_tags %}
 ab F False
 ab T True
-ab str __str__(self):
-ab ini __int__(self):
-ab mod models.Model
+" ab str __str__(self):
+" ab ini __int__(self):
+" ab mod models.Model
 ab re return
+ab bulma <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" rel="stylesheet">
 
+ab YU <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-
-
-nnoremap - <C-y>
+ab nor <link href="https://yarnpkg.com/en/package/normalize.css" rel="stylesheet">
+" nnoremap - <C-y>
 " nnoremap k <C-y>
-nnoremap = <C-e>
+" nnoremap = <C-e>
 " nnoremap j <C-e>
 
 nnoremap } /^\S<CR>
@@ -87,8 +95,8 @@ nnoremap <C-o> <C-o>zz
 " nnoremap {{ {{<bar>zz
 " nnoremap }} }}<bar>zz
 
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
 
 nnoremap \h :nohlsearch<CR>
 
@@ -99,8 +107,8 @@ nnoremap \h :nohlsearch<CR>
 "augroup END
 
 "Make views automatic
-autocmd BufWinLeave *.* mkview 
-autocmd BufWinEnter *.* silent loadview
+" autocmd BufWinLeave *.* mkview
+" autocmd BufWinEnter *.* silent loadview
 
 nnoremap ' `
 
@@ -134,7 +142,15 @@ inoremap <C-c> <ESC>:w<CR>
 
 let python_highlight_all = 1
 
-let g:sparkupExecuteMapping = '<C-z>'
+" sparkup setting
+ let g:sparkupExecuteMapping = '<C-z>'
+
+" emmet setting
+let g:user_emmet_install_global = 1
+" autocmd FileType html,css,js,vue EmmetInstall
+let g:user_emmet_leader_key='<C-i>'
+let g:user_emmet_mode='i'
+
 
 
 let b:match_words = '<tag>:</tag>'
@@ -154,10 +170,16 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 
+
+"rainbow_levels
+map <leader>l :RainbowLevelsToggle<cr>
+
+
+"rainbow parentheses improved
 let g:rainbow_active = 1
 let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+	\	'ctermfgs': ['lightblue', 'yellow', 'cyan', 'magenta', 'green', 'red'],
 	\	'operators': '_,_',
 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
@@ -179,14 +201,27 @@ let g:rainbow_conf = {
 	\}
 
 
-let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace'], 'javascript': ['standard'],}
+let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'], 'javascript': ['standard', 'eslint'], 'vue': ['standard', 'eslint'],}
+let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace', 'prettier'], 'javascript': ['prettier_standard', 'standard', 'eslint'], 'css': ['prettier'], 'vue': ['standard', 'eslint'],}
+let g:ale_linter_aliases = {'html': ['html', 'javascript', 'css']}
+let g:ale_fixers['*'] = ['remove_trailing_lines', 'trim_whitespace']
 let g:ale_fix_on_save = 1
-let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'], 'javascript': ['standard'],}
+" let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_linters_explicit = 1
+let g:ale_set_highlights = 0
+" let g:ale_sign_error = "◉"
+" let g:ale_sign_warning = "◉"
+" highlight ALEErrorSign ctermfg=9 ctermbg=15 guifg=#C30500 guibg=#F5F5F5
+" highlight ALEWarningSign ctermfg=11 ctermbg=15 guifg=#ED6237 guibg=#F5F5F5
+
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 
 nmap <silent> <leader>jj :ALENext<cr>
 nmap <silent> <leader>kk :ALEPrevious<cr>
-
 
 
 
@@ -194,7 +229,7 @@ autocmd FileType python map <buffer> \\ :call Flake8()<CR>
 
 
 
-nnoremap \n :set relativenumber!<CR>
+nnoremap \n :set number! relativenumber!<CR>
 set number relativenumber
 " :augroup numbertoggle
 " :  autocmd!
@@ -234,9 +269,8 @@ let g:tmuxline_preset = {
       \'y'    : ['%R']}
 
 " Indentation without hard tabs
-" set autoindent
-" set expandtab
-
+set autoindent
+set expandtab
 
 au BufNewFile,BufRead *.py
     \ set tabstop=4 |
@@ -247,10 +281,10 @@ au BufNewFile,BufRead *.py
     " \ set autoindent |
     \ set fileformat=unix
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
-" au BufNewFile,BufRead *.js,*.html,*.css
-"     \ set tabstop=2 |
-"     \ set softtabstop=2 |
-"     \ set shiftwidth=2 |
+au BufNewFile,BufRead *.js,*.html,*.vue
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
 set encoding=utf-8
 
 set complete-=i   " disable scanning included files
@@ -262,15 +296,28 @@ set hidden
 
 set showmatch
 set wildmenu
-set wildmode=full
+set wildmode=longest,list,full
 set hlsearch
 set incsearch
 set laststatus=2
 set statusline+=%f
 
-" " Enable folding 
-set foldmethod=indent 
-set foldlevel=99
+" Enable folding
+" set foldmethod=indent
+" set foldlevel=99
+augroup vimrc
+  au BufReadPre * setlocal foldmethod=indent
+  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+augroup END
+set foldmethod=syntax
+" set foldcolumn=1
+" let javaScript_fold=1
+" set foldlevelstart=99
+
+
+
+
+noremap <Leader>, :cd ..<CR>
 
 
 inoremap <C-[> <Esc>A:<CR>
@@ -280,8 +327,8 @@ inoremap <C-k> <C-o>k
 let g:pymode_python = 'python3'
 let g:pymode_rope = 0
 
-noremap <leader>, :vertical resize +5<CR>
-noremap <leader>. :vertical resize -5<CR>
+" noremap <leader>, :vertical resize +5<CR>
+" noremap <leader>. :vertical resize -5<CR>
 
 " Switch between the last two files
 nnoremap <Leader><leader> <C-^>
@@ -291,7 +338,7 @@ nnoremap <Tab> :bnext<CR>
 nmap <S-h> :bp<cr>
 nmap <S-l> :bn<cr>
 
-nnoremap <Leader>b :b 
+nnoremap <Leader>b :b
 
 
 "Buffer switch using numbers
@@ -317,7 +364,7 @@ while c <= 99
 noremap <leader>q ZQ
 noremap <leader>d :bd<cr>
 noremap <Leader>e :edit<Space>
-noremap <Leader>f :find<Space>
+" noremap <Leader>f :find<Space>
 
 " " vimux mapping
 " " Prompt for a command to run
@@ -329,8 +376,11 @@ noremap <Leader>f :find<Space>
 
 noremap <Leader>y "*y
 noremap <Leader>' "*p
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
+" noremap <Leader>Y "+y
+" noremap <Leader>P "+p
+
+" let g:prettier#autoformat = 0
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " increase the window size by a factor of 1.5 and decrease the window size by 0.67
 " nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -344,7 +394,7 @@ nnoremap tc :tabc<CR>
 " nnoremap <leader>b :ls<CR>:b<Space>
 
 nnoremap <leader>rv :source $MYVIMRC<CR>
-noremap <leader>av :e $MYVIMRC<CR> 
+noremap <leader>av :e $MYVIMRC<CR>
 
 " inoremap <C-[> <Esc><Esc>
 "let g:indent_guides_auto_colors = 0
@@ -359,6 +409,7 @@ nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
+
 
 
 "Enhanced increment/decrement(Ctrl-A Ctrl-X)
