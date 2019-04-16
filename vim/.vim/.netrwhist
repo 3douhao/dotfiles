@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/tomjerry/Desktop/travel/app/assets/styles'
+let g:netrw_dirhist_2='/Users/tomjerry/Desktop/travel/app/temp/styles.css'
+let g:netrw_dirhist_3='/Users/tomjerry/Desktop/travel/app/temp'
+let g:netrw_dirhist_4='/Users/tomjerry/Desktop/travel/app'
+let g:netrw_dirhist_5='/Users/tomjerry/Desktop/travel'
