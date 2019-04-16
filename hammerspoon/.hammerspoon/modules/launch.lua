@@ -15,6 +15,7 @@ local key2app = {
     h = 'Firefox',
     i = 'iTerm',
     -- g = 'Google Chrome',
+    j = 'Opera',
     k = 'ForkLift',
     l = 'Clearview',
     m = 'Terminal',

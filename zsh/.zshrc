@@ -6,7 +6,7 @@ export ZSH=/Users/tomjerry/.oh-my-zsh
 export CLICOLOR=YES
 export EDITOR="vim"
 export GOPATH=$HOME/go
-
+export NNN_CONTEXT_COLORS='1234'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -93,19 +93,23 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ns="npm run serve"
+alias nb="npm run build"
 alias v="/usr/local/bin/vim"
 alias de="deactivate"
 alias gs="git status"
-alias gc="git commit -m"
+alias gm="git commit -m"
 alias gi="git init"
 alias gp="git push"
 alias gu="git pull origin master"
 alias gl="git log"
-alias go="git clone"
+alias gc="git clone"
 alias ga="git add --all"
 alias gh="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+alias gmnf="git merge --no-ff"
 alias sp="django-admin startproject"
 alias ni="npm install"
+alias nn="npm init -y"
 alias sa="django-admin startapp"
 alias yd="youtube-dl -f best -o ~/Downloads/youtube/'%(title)s.%(ext)s'"
 alias d="dirs -v"
@@ -156,8 +160,8 @@ source /Library/Frameworks/Python.framework/Versions/3.6/bin/virtualenvwrapper.s
 
 
 
-# PATH MODIFICATIONS  
-# Functions which modify the path given a directory, but only if the directory 
+# PATH MODIFICATIONS
+# Functions which modify the path given a directory, but only if the directory
 # exists and is not already in the path. (Super useful in ~/.zshlocal)
 _append_to_path() {
   if [ -d $1 -a -z ${path[(r)$1]} ]; then
@@ -165,7 +169,7 @@ _append_to_path() {
   fi
 }
 
-# Returns whether the given command is executable or aliased. 
+# Returns whether the given command is executable or aliased.
 _has() {
   return $( whence $1 >/dev/null )
 }
@@ -187,3 +191,4 @@ if _has fzf && _has ag; then
   '
 fi
 
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
