@@ -11,6 +11,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
 # stty erase '^?'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -60,7 +64,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(tmuxinator git autojump zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(tmuxinator git autojump z zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 # source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
@@ -92,7 +96,10 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
+
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias nv="nvim"
+alias l="exa -lahF"
 alias ns="npm run serve"
 alias nb="npm run build"
 alias v="/usr/local/bin/vim"
@@ -158,8 +165,6 @@ source /Library/Frameworks/Python.framework/Versions/3.6/bin/virtualenvwrapper.s
 
 # FZF settings
 
-
-
 # PATH MODIFICATIONS
 # Functions which modify the path given a directory, but only if the directory
 # exists and is not already in the path. (Super useful in ~/.zshlocal)
@@ -180,15 +185,21 @@ if [ -e ~/.fzf ]; then
   source ~/.fzf/shell/completion.zsh
 fi
 
+
+# fzf + fd configuration
+# follow symbolic links and search hidden files
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # fzf + ag configuration
-if _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_DEFAULT_OPTS='
-  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
-  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
-  '
-fi
+# if _has fzf && _has ag; then
+#   export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --nocolor -g ""'
+#   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+#   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+#   export FZF_DEFAULT_OPTS='
+#   --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
+#   --color info:108,prompt:109,spinner:108,pointer:168,marker:168
+#   '
+# fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
