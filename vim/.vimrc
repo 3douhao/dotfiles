@@ -25,6 +25,7 @@ set rtp+=~/.fzf
 nnoremap <Leader>f :FZF<CR>
 
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " nnoremap <Leader>cd :lcd %:p:h<CR>
 
 set tags+=~/tags/django.tags
@@ -130,6 +131,7 @@ set cursorline
 
 set clipboard=unnamed
 set noswapfile
+
 set splitright
 set splitbelow
 
@@ -239,7 +241,6 @@ set number relativenumber
 
 syntax on " highlight
 set t_Co=256
-colorscheme evening
 
 " let g:gruvbox_italic = 1
 " colorscheme gruvbox
@@ -257,16 +258,24 @@ call pathogen#helptags()
 let g:airline_section_c = '%{strftime("%H:%M")}'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_powerline_fonts = 1
+let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme='simple'
+let g:airline_theme='one'
+let g:airline_powerline_fonts = 1
+
+colorscheme one
+set background=dark
+
+" colorscheme onedark
+
 
 "Tmuxline settings
 let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W'],
-      \'y'    : ['%R']}
+       \'a'    : '#S',
+       \'win'  : '#I #W',
+       \'cwin' : '#I #W',
+       \'y'    : '%R'}
+let g:tmuxline_theme = 'zenburn'
 
 " Indentation without hard tabs
 set autoindent
@@ -323,6 +332,11 @@ noremap <Leader>, :cd ..<CR>
 inoremap <C-[> <Esc>A:<CR>
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 let g:pymode_python = 'python3'
 let g:pymode_rope = 0
@@ -440,5 +454,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 "call plug#begin('~/.vim/plugged')
 call plug#begin('~/.vim/bundle')
-
+Plug 'gko/vim-coloresque'
+Plug 'junegunn/goyo.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'rakr/vim-one'
 call plug#end()
