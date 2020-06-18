@@ -1,10 +1,14 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/tomjerry/.fzf/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin
+
+
+plugins=(tmuxinator osx web-search ripgrep git autojump z zsh-autosuggestions globalias zsh-syntax-highlighting)
+
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/tomjerry/.oh-my-zsh
 export CLICOLOR=YES
-export EDITOR="vim"
+export EDITOR="nvim"
 export GOPATH=$HOME/go
 export NNN_CONTEXT_COLORS='1234'
 export NVM_DIR="$HOME/.nvm"
@@ -60,11 +64,6 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(tmuxinator git autojump z zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 # source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
@@ -98,12 +97,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias nv="nvim"
+alias n="nvim"
+alias sz="source ~/.zshrc"
+alias st="source ~/.tmux.conf"
+alias c="clear"
 alias l="exa -lahF"
 alias ns="npm run serve"
 alias nb="npm run build"
 alias v="/usr/local/bin/vim"
-alias de="deactivate"
+alias gdf="~/dotfiles"
 alias gs="git status"
 alias gm="git commit -m"
 alias gi="git init"
@@ -114,35 +116,36 @@ alias gc="git clone"
 alias ga="git add --all"
 alias gh="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
 alias gmnf="git merge --no-ff"
-alias sp="django-admin startproject"
+# alias sp="django-admin startproject"
 alias ni="npm install"
 alias nn="npm init -y"
-alias sa="django-admin startapp"
+alias nr="npm run"
+# alias sa="django-admin startapp"
 alias yd="youtube-dl -f best -o ~/Downloads/youtube/'%(title)s.%(ext)s'"
 alias d="dirs -v"
 alias md="mkdir"
-alias vv="v ~/.vimrc"
-alias vz="v ~/.zshrc"
-alias vt="v ~/.tmux.conf"
+alias nv="v ~/.vimrc"
+alias nz="n ~/.zshrc"
+alias nt="n ~/.tmux.conf"
 alias -s html=v
 # alias -s py=v
 alias -s js=v
 alias -s txt=v
-alias ve="virtualenv"
-alias pi="pip install"
-alias pr="pip install -r requirements.txt"
+# alias ve="virtualenv"
+# alias pi="pip install"
+# alias pr="pip install -r requirements.txt"
 alias gd="cd ~/Desktop"
 alias bk="cd -"
 #alias vm="set -o vi"
 alias r="ranger"
 alias bi="brew install"
-alias mkv="mkvirtualenv"
+# alias mkv="mkvirtualenv"
 alias t="tmux"
 
-alias rs="python manage.py runserver"
-alias mm="python manage.py makemigrations"
-alias mg="python manage.py migrate"
-alias csu="python manage.py createsuperuser"
+# alias rs="python manage.py runserver"
+# alias mm="python manage.py makemigrations"
+# alias mg="python manage.py migrate"
+# alias csu="python manage.py createsuperuser"
 
 alias tk="tmux kill-session -t"
 alias tn="tmux new -s"
@@ -202,4 +205,19 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 #   '
 # fi
 
+# # git add, commit, push in one go, doesn't work , don't know why
+# function dp() {
+#   git add ~/.vimrc
+#   git commit -m "$1"
+#   git push
+# }
+
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

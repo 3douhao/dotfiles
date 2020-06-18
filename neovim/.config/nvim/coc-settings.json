@@ -1,13 +1,10 @@
 {
-  "eslint.autoFixOnSave": true,
-  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-  "tsserver.formatOnType": true,
-  "coc.preferences.formatOnType": true
+  "eslint.autoFixOnSave": false,
+  "tsserver.formatOnType": false,
+  "snippets.ultisnips.enable": true,
+  "suggest.noselect": false,
+  "diagnostic.displayByAle": true,
+  "diagnostic.enableHighlightLineNumber": false,
+  "coc.preferences.formatOnType": false,
+  "typescript.showUnused": false
 }
