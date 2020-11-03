@@ -10,15 +10,25 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 call plug#begin('~/.config/nvim/plugged')
+" Plug 'joereynolds/SQHell.vim'
+Plug 'tpope/vim-dadbod'
+Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'diepm/vim-rest-console'
+Plug 'airblade/vim-gitgutter'
+Plug 'pgdouyon/vim-evanesco'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-sensible'
+" Plug 'tpope/vim-sensible'
 Plug 'Yggdroot/indentLine'
+" Plug 'xabikos/vscode-react'
 Plug 'andymass/vim-matchup'
+Plug 'jremmen/vim-ripgrep'
 Plug 'mattn/emmet-vim'
 Plug 'honza/vim-snippets'
 Plug 'ap/vim-css-color'
-Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'osyo-manga/vim-anzu'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -26,12 +36,10 @@ Plug 'mileszs/ack.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'tpope/vim-unimpaired'
-" Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
-" Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-surround'
@@ -45,9 +53,8 @@ call plug#end()
 
 "COC Configuration
 " Give more space for displaying messages.
-set cmdheight=2
-set cursorline
-set shortmess=a
+set cmdheight=1
+set shortmess=at
 
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -104,9 +111,14 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<tab>'
+" let g:coc_snippet_next = '<tab>'
 " imap <C-j> <Tab>
 
+" Use Tab to complete selection
+" inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Disable <CR> to complete selection
+inoremap <expr> <CR> pumvisible() ? "\<C-e><CR>" : "\<CR>"
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-n>'
 
@@ -145,9 +157,15 @@ let g:coc_snippet_prev = '<c-p>'
 " let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
 " let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 nmap <C-n> <C-e>
 nmap <C-p> <C-y>
+
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
 
 "Move lines up and down
 nnoremap ∆ :m .+1<CR>==
@@ -161,6 +179,8 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 
 " let g:coc_global_extensions = [ 'coc-json', 'coc-snippets', 'coc-tsserver' ]
 
+" nnoremap <Leader>in :PlugInstall<CR>
+" nnoremap <Leader>cl :PlugClean<CR>
 
 "path setting
 let mapleader = ' '
@@ -174,6 +194,7 @@ set wrapmargin=0
 
 set ignorecase
 set smartcase
+
 
 " set suffixesadd=.py
 " set wildignore=*.pyc
@@ -191,26 +212,30 @@ nnoremap <Leader>f :FZF<CR>
 
 nnoremap <C-g> 1<C-g>
 
+" nnoremap <C-]> <C-]>
+
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " nnoremap <Leader>cd :lcd %:p:h<CR>
 
-set tags+=~/tags/django.tags
+" set tags+=~/tags/django.tags
+set tags=./tags;/
 
-nmap \o :set paste!<CR>
+nnoremap <Leader>O :set paste!<CR>
+nnoremap <Leader>o o<CR>
 
 nnoremap gh <S-h>
 nnoremap gl <S-l>
 
-
-nnoremap \x :cclose<CR>
-nnoremap <Leader>x daw
-
+nnoremap <Leader>x :cclose<CR>
+" nnoremap <Leader>w daw
+" nnoremap <Leader>b bdw
 
 "Ag settings
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ackhighlight = 1
-nnoremap <Leader>k :Ack!<Space>
+nnoremap <Leader>c :Ack!<Space>
+nnoremap <Leader>g :Rg -g '!{node_modules,.git,dist,tags}'<Space>
 
 
 " matchit.vim settings
@@ -222,18 +247,24 @@ nnoremap <Leader>! :!
 
 let g:vim_json_syntax_conceal = 0
 
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap <C-i> <C-i>zz
-nnoremap <C-o> <C-o>zz
+" nnoremap n nzz
+" nnoremap N Nzz
+" nnoremap <C-i> <C-i>zz
+" nnoremap <C-o> <C-o>zz
 
 nnoremap <leader>h :nohlsearch<CR>
 
 ""fold settings
-"augroup vimrc
-"  au BufReadPre * setlocal foldmethod=indent
-"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-"augroup END
+" augroup vimrc
+"   au BufReadPre * setlocal foldmethod=indent
+"   au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+" augroup END
+
+"-- FOLDING --
+" set foldmethod=syntax "syntax highlighting items specify folds
+" set foldcolumn=2 "defines 1 col at window left, to indicate folding
+" let javaScript_fold=1 "activate folding by JS syntax
+" set foldlevelstart=99 "start file with all folds opened
 
 "Make views automatic
 " autocmd BufWinLeave *.* mkview
@@ -248,39 +279,35 @@ set wrap
 set linebreak
 set nolist  " list disables linebreak
 
-"hilight the cursor line and cursor column
-" set cursorcolumn
-" set cursorline
 
 set clipboard=unnamed
 set noswapfile
 set splitright
 set splitbelow
 
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+" Increment or Decrement using <C-A> or <C-X>
+" set nrformats+=alpha
+
 
 "autosave
 " :au FocusLost * silent! wa "when focus lost
 " :set autowriteall "saved on buffer switch
 noremap <C-c> <ESC>:w<CR>
-inoremap <C-c> <ESC>:w<CR>
+inoremap <C-c> <ESC>
 
 
-let python_highlight_all = 1
+" let python_highlight_all = 1
 
-" sparkup setting
- " let g:sparkupExecuteMapping = '<C-z>'
 
 " Emmet setting
 let g:user_emmet_install_global = 1
-autocmd FileType html,css,js EmmetInstall
-let g:user_emmet_leader_key='<C-\>'
 let g:user_emmet_mode='i'
-let g:user_emmet_next_key = '<C-y>n'
-imap <C-z> <C-\>,
+autocmd FileType html,css,js EmmetInstall
+" let g:user_emmet_leader_key='<C-\>'
+let g:user_emmet_next_key = '<C-n>'
+imap <C-p> <C-y>N
+imap <C-z> <C-y>,
 
 
 let b:match_words = '<tag>:</tag>'
@@ -290,8 +317,8 @@ let b:match_words = '<tag>:</tag>'
 " rainbow_levels
 map <leader>l :RainbowLevelsToggle<cr>
 
-nmap <Leader>p O<Esc>
-nmap <Leader>n o<Esc>
+nmap <Leader>p 3]<space>2j
+nmap <Leader>n [<space>]<space>
 
 
 
@@ -321,8 +348,8 @@ nmap <Leader>n o<Esc>
 " 	\}
 
 
-let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'], 'javascript': ['standard'], 'vue': ['standard']}
-let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace', 'prettier'], 'javascript': ['standard'], 'css': ['prettier'], 'vue': ['standard'],}
+let g:ale_linters = {'python': ['pylint', 'flake8', 'mypy','prospector', 'pycodestyle', 'pyflakes', 'pyls'], 'html': ['tidy', 'htmlhint'], 'javascript': ['standard'], 'typescript': ['tsserver'], 'vue': ['standard']}
+let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements', 'autopep8', 'isort', 'yapf', 'remove_trailing_lines', 'trim_whitespace'], 'html': ['remove_trailing_lines', 'trim_whitespace', 'prettier'], 'typescript': ['prettier'], 'javascript': ['prettier_standard'], 'css': ['prettier'], 'vue': ['standard'], 'xml': ['prettier'], 'sql': ['pgformatter']}
 let g:ale_linter_aliases = {'html': ['html', 'javascript', 'css']}
 let g:ale_fixers['*'] = ['remove_trailing_lines', 'trim_whitespace']
 let g:ale_fix_on_save = 1
@@ -331,20 +358,20 @@ let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_linters_explicit = 1
 let g:ale_set_highlights = 0
-" highlight ALEErrorSign ctermfg=9 ctermbg=15 guifg=#C30500 guibg=#F5F5F5
-" highlight ALEWarningSign ctermfg=11 ctermbg=15 guifg=#ED6237 guibg=#F5F5F5
+highlight ALEErrorSign ctermfg=9 ctermbg=15 guifg=#C30500 guibg=#F5F5F5
+highlight ALEWarningSign ctermfg=11 ctermbg=15 guifg=#ED6237 guibg=#F5F5F5
 
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+" highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
 
-map <Leader>m :ALEFix<CR>
+" map <Leader>m :ALEFix<CR>
 
 nmap <silent> <leader>jj :ALENext<cr>
 nmap <silent> <leader>kk :ALEPrevious<cr>
 
 
 
-autocmd FileType python map <buffer> \\ :call Flake8()<CR>
+" autocmd FileType python map <buffer> \\ :call Flake8()<CR>
 
 
 
@@ -356,24 +383,6 @@ set number relativenumber
 " :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 " :augroup END
 
-syntax on " highlight
-set t_Co=256
-" colorscheme evening
-" colorscheme one
-colorscheme codedark
-set background=dark
-set termguicolors     " enable true colors support
-
-
-" let g:gruvbox_italic = 1
-" colorscheme gruvbox
-" let ayucolor="light"  " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-" let ayucolor="dark"   " for dark version of theme
-" colorscheme ayu
-
-"execute pathogen#infect()
-"call pathogen#helptags()
 
 
 "vim-airline settings
@@ -381,11 +390,24 @@ set termguicolors     " enable true colors support
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline_theme= 'codedark'
 let airline#extensions#coc#warning_symbol = ''
 let airline#extensions#coc#error_symbol = ''
 let g:airline#extensions#coc#enabled = 0
+
+
+syntax on "highlight
+
+set t_Co=256
+colorscheme codedark
+set background=dark
+set termguicolors     " enable true colors support
+
+" highlight cursor line
+hi cursorline guibg=darkgreen guifg=white
+nnoremap <Leader>m :set cursorline!<CR>
+hi MatchParen ctermbg=blue guibg=darkgreen
 
 
 "Tmuxline settings
@@ -408,7 +430,7 @@ au BufNewFile,BufRead *.py
     " \ set autoindent |
     \ set fileformat=unix
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
-au BufNewFile,BufRead *.js,*.html,*.pug,*json
+au BufNewFile,BufRead *.js,*.html,*.pug,*json,*.ejs
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
@@ -429,32 +451,23 @@ set incsearch
 set laststatus=2
 set statusline+=%f
 
-" Enable folding
-" set foldmethod=indent
-" set foldlevel=99
-augroup vimrc
-  au BufReadPre * setlocal foldmethod=indent
-  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-augroup END
+
+" folding
+" augroup vimrc
+"   au BufReadPre * setlocal foldmethod=indent
+"   au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+" augroup END
 set foldmethod=manual
-
-"toggle foldenable with zi
-set nofoldenable
-
-" set foldcolumn=1
-" let javaScript_fold=1
-" set foldlevelstart=99
+set foldlevelstart=99
 
 
-noremap <Leader>, :cd ..<CR>
+" noremap <Leader>, :cd ..<CR>
 
 
 " inoremap <C-[> <Esc>A:<CR>
 imap <C-j> <Down>
 imap <C-k> <Up>
 
-let g:pymode_python = 'python3'
-let g:pymode_rope = 0
 
 " noremap <leader>, :vertical resize +5<CR>
 " noremap <leader>. :vertical resize -5<CR>
@@ -493,7 +506,6 @@ while c <= 99
 noremap <leader>q ZQ
 noremap <leader>d :bd<cr>
 noremap <Leader>e :edit<Space>
-" noremap <Leader>f :find<Space>
 
 " " vimux mapping
 " " Prompt for a command to run
@@ -504,15 +516,15 @@ noremap <Leader>e :edit<Space>
 " nnoremap <silent> vv <C-w>v
 
 " noremap <Leader>y "*y
-" noremap <Leader>' "*p
+noremap <Leader>' "*p
 " noremap <Leader>Y "+y
 " noremap <Leader>P "+p
 
 " Enable auto formatting of files that have "@format" or "@prettier" tag
-let g:prettier#autoformat = 1
+" let g:prettier#autoformat = 1
 
 " Allow auto formatting for files without "@format" or "@prettier" tag
-let g:prettier#autoformat_require_pragma = 0
+" let g:prettier#autoformat_require_pragma = 0
 
 
 " let g:prettier#autoformat = 0
@@ -539,14 +551,8 @@ noremap <leader>av :e ~/.config/nvim/init.vim<CR>
 "
 "vim-tmux-navigator mappiing
 " let g:tmux_navigator_no_mappings = 1
-
-" nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
-
-
+" Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
 
 "Enhanced increment/decrement(Ctrl-A Ctrl-X)
 " function! AddSubtract(char, back)
@@ -562,5 +568,6 @@ noremap <leader>av :e ~/.config/nvim/init.vim<CR>
 " 'javascript': ['prettier', 'eslint'],
 "
 "
+
 "set cursor in neovim
 set guicursor=

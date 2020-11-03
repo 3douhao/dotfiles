@@ -1,10 +1,14 @@
 {
   "eslint.autoFixOnSave": false,
   "tsserver.formatOnType": false,
-  "snippets.ultisnips.enable": true,
+  "snippets.ultisnips.enable": false,
   "suggest.noselect": false,
   "diagnostic.displayByAle": true,
   "diagnostic.enableHighlightLineNumber": false,
   "coc.preferences.formatOnType": false,
+  "javascript.showUnused": false,
+  "javascript.suggestionActions.enabled": false,
+  "javascript.validate.enable": false,
+  "typescript.suggestionActions.enabled": false,
   "typescript.showUnused": false
 }
